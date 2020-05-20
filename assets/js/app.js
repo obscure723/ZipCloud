@@ -20,6 +20,9 @@ $(function () {
   // 検索ボタンがクリックされたら
   $('#search-btn').click(() => {
 
+    // Loadingを表示する
+    $.LoadingOverlay("show");
+
     // 入力された郵便番号を取得
     let val = $('#search-word').val()
 
@@ -36,8 +39,14 @@ $(function () {
       $("#prefecture").text(data.results[0].address1);
       $("#city").text(data.results[0].address2);
       $("#address").text(data.results[0].address3);
+
     }).fail((error) => {
       console.error(error)
+
+    }).always(() => {
+      // 通信が成功した場合、失敗した場合、両方の最後に実行
+      // Loadingを非表示にする
+      $.LoadingOverlay("hide");
     })
 
   })
